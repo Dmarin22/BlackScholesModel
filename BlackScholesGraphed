@@ -1,0 +1,42 @@
+import math
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import norm
+
+# Parameters
+S = 42  # Underlying Price
+K = 40  # Strike Price
+T = 0.5  # Time to Expiration (in years)
+r = 0.1  # Risk-Free Rate
+vol = 0.2  # Volatility
+
+# Calculate d1 and d2
+d1 = (math.log(S / K) + (r + 0.5 * vol**2) * T) / (vol * math.sqrt(T))
+d2 = d1 - (vol * math.sqrt(T))
+
+# Calculate Call and Put prices
+C = S * norm.cdf(d1) - K * math.exp(-r * T) * norm.cdf(d2)
+P = K * math.exp(-r * T) * norm.cdf(-d2) - S * norm.cdf(-d1)
+
+# Create a range of underlying prices for plotting
+S_range = np.linspace(20, 60, 100)
+
+# Calculate option prices for different underlying prices
+call_prices = []
+put_prices = []
+for S_current in S_range:
+    d1_current = (math.log(S_current / K) + (r + 0.5 * vol**2) * T) / (vol * math.sqrt(T))
+    d2_current = d1_current - (vol * math.sqrt(T))
+    call_prices.append(S_current * norm.cdf(d1_current) - K * math.exp(-r * T) * norm.cdf(d2_current))
+    put_prices.append(K * math.exp(-r * T) * norm.cdf(-d2_current) - S_current * norm.cdf(-d1_current))
+
+# Plot Call and Put prices as a function of the underlying price
+plt.figure(figsize=(10, 6))
+plt.plot(S_range, call_prices, label='Call Option Price', color='blue')
+plt.plot(S_range, put_prices, label='Put Option Price', color='red')
+plt.title('Black-Scholes Option Pricing Model')
+plt.xlabel('Underlying Price (S)')
+plt.ylabel('Option Price')
+plt.legend()
+plt.grid(True)
+plt.show()
