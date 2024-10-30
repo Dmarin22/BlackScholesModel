@@ -2,9 +2,12 @@ from django.shortcuts import render
 from .forms import OptionForm
 from .utils import black_scholes
 from .models import OptionCalculation
+from .graphs import generate_option_price_graph
 
 def calculate_option(request):
     option_price = None
+    graph = None
+
     if request.method == 'POST':
         form = OptionForm(request.POST)
         if form.is_valid():
@@ -15,12 +18,12 @@ def calculate_option(request):
             volatility = form.cleaned_data['volatility'] / 100  # Convert to decimal
             option_type = form.cleaned_data['option_type']
 
-            # Calculate option price using the alternative Black-Scholes formula
+            # Calculate the option price
             option_price = black_scholes(
                 stock_price, strike_price, time_to_maturity, risk_free_rate, volatility, option_type
             )
 
-            # Save the result to the database
+            # Save calculation to the database
             OptionCalculation.objects.create(
                 stock_price=stock_price,
                 strike_price=strike_price,
@@ -30,9 +33,11 @@ def calculate_option(request):
                 option_type=option_type,
                 option_price=option_price
             )
+
+            # Generate the option price graph
+            graph = generate_option_price_graph(stock_price, strike_price, time_to_maturity, risk_free_rate, volatility)
+
     else:
         form = OptionForm()
 
-    return render(request, 'calculate_option.html', {'form': form, 'option_price': option_price})
-
-
+    return render(request, 'calculate_option.html', {'form': form, 'option_price': option_price, 'graph': graph})

@@ -3,19 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Black-Scholes Calculator</title>
+    <title>Option Pricing Calculator</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Black-Scholes Option Pricing Calculator</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Calculate</button>
-    </form>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h3 class="card-title text-center text-primary">Black-Scholes Option Pricing Calculator</h3>
+                <form method="post" class="mt-4">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Stock Price</label>
+                            <input type="number" step="0.01" name="stock_price" class="form-control" placeholder="e.g., 42" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Strike Price</label>
+                            <input type="number" step="0.01" name="strike_price" class="form-control" placeholder="e.g., 40" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Time to Maturity (Years)</label>
+                            <input type="number" step="0.01" name="time_to_maturity" class="form-control" placeholder="e.g., 0.5" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Risk-Free Rate (%)</label>
+                            <input type="number" step="0.01" name="risk_free_rate" class="form-control" placeholder="e.g., 10" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Volatility (%)</label>
+                            <input type="number" step="0.01" name="volatility" class="form-control" placeholder="e.g., 20" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Option Type</label>
+                            <select name="option_type" class="form-control">
+                                <option value="call">Call</option>
+                                <option value="put">Put</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block mt-4">Calculate and Show Graph</button>
+                </form>
+                
+                {% if option_price is not None %}
+                    <div class="mt-4 alert alert-info">
+                        <h5>Calculated Option Price:</h5>
+                        <p>${{ option_price }}</p>
+                    </div>
+                {% endif %}
+                
+                {% if graph %}
+                    <div class="mt-5 text-center">
+                        <h5 class="text-secondary">Option Price Graph</h5>
+                        <img src="data:image/png;base64,{{ graph }}" alt="Option Pricing Graph" class="img-fluid mt-3" style="border: 2px solid #007bff;">
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 
-    {% if option_price %}
-        <h2>Calculated Option Price: {{ option_price }}</h2>
-    {% endif %}
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+
+
 
