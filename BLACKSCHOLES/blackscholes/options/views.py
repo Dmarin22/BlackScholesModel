@@ -3,12 +3,18 @@ from .forms import OptionForm
 from .utils import black_scholes
 from .models import OptionCalculation
 from .graphs import generate_option_price_graph
-
+def intro_page(request):
+    """
+    Renders the introductory page for the options simulator.
+    """
+    return render(request, 'intro.html')
 def calculate_option(request):
     option_price = None
     graph = None
+    intro = True  # Flag to indicate if this is the introductory page
 
     if request.method == 'POST':
+        intro = False  # Switch to calculator functionality
         form = OptionForm(request.POST)
         if form.is_valid():
             stock_price = form.cleaned_data['stock_price']
@@ -36,8 +42,12 @@ def calculate_option(request):
 
             # Generate the option price graph
             graph = generate_option_price_graph(stock_price, strike_price, time_to_maturity, risk_free_rate, volatility)
-
     else:
         form = OptionForm()
 
-    return render(request, 'calculate_option.html', {'form': form, 'option_price': option_price, 'graph': graph})
+    return render(request, 'calculate_option.html', {
+        'form': form,
+        'option_price': option_price,
+        'graph': graph,
+        'intro.html': intro
+    })

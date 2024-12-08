@@ -17,10 +17,9 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from django.http import HttpResponseRedirect
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path('options/', include('options.urls')),
-     path('', lambda request: HttpResponseRedirect('/options/calculate/')),
+    path('admin/', admin.site.urls),
+    path('', include('options.urls')),  # Ensure '' (root URL) includes options.urls
 ]
+

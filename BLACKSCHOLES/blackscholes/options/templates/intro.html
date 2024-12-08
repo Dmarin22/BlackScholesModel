@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Options Simulator</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: url('/static/images/option_calculator_bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Arial', sans-serif;
+            color: black;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        h2 {
+            font-size: 2.5rem; /* Larger heading font */
+            font-weight: bold;
+            color: #007bff; /* Add a nice pop of blue */
+        }
+        p, li {
+            font-size: 1.2rem; /* Increase content font size */
+        }
+        .btn-primary {
+            background-color: #3498db;
+            border: none;
+            font-size: 1.2rem; /* Bigger button font */
+        }
+        .btn-primary:hover {
+            background-color: #1d6fa5;
+        }
+        nav {
+            background: rgba(52, 73, 94, 0.8);
+        }
+        nav a {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">Options Simulator</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'calculate_option' %}">Calculator</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Introductory Content -->
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card p-5">
+                <h2 class="text-center">Welcome to the Options Simulator</h2>
+                <p class="text-center">
+                    This platform is designed to help you learn about financial options and how to price them.
+                </p>
+                <ul>
+                    <li><strong>Understand Options:</strong> Learn the basics of calls and puts.</li>
+                    <li><strong>Use the Calculator:</strong> Enter parameters to calculate option prices using the Black-Scholes model.</li>
+                    <li><strong>Analyze Graphs:</strong> Visualize sensitivities and market scenarios.</li>
+                </ul>
+                <div class="text-center mt-4">
+                    <a href="{% url 'calculate_option' %}" class="btn btn-primary btn-lg">Get Started with the Calculator</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+

@@ -5,11 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Option Pricing Calculator</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Chart.js library -->
     <style>
         /* Gradient background */
         body {
-            background: linear-gradient(135deg, #2c3e50, #34495e); /* Dark gradient */
+            background: linear-gradient(135deg, #2c3e50, #34495e);
             color: white;
             font-family: Arial, sans-serif;
         }
@@ -18,19 +17,19 @@
         #sidebar {
             position: fixed;
             top: 0;
-            left: 0; /* Start visible */
+            left: 0;
             height: 100%;
-            width: 200px; /* Sidebar width */
-            background-color: rgba(52, 73, 94, 0.9); /* Semi-transparent */
+            width: 200px;
+            background-color: rgba(52, 73, 94, 0.9);
             padding: 20px;
             overflow-y: auto;
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
-            transition: left 0.3s ease; /* Smooth transition */
+            transition: left 0.3s ease;
             color: white;
             z-index: 1000;
             font-size: 14px;
         }
-        /* Sidebar hidden state */
+
         #sidebar.hidden {
             left: -200px;
         }
@@ -60,7 +59,7 @@
             transition: margin-left 0.3s ease;
             text-align: center;
         }
-        /* Adjust margin when sidebar is hidden */
+
         #sidebar.hidden + #main-content {
             margin-left: 50px;
         }
@@ -71,17 +70,10 @@
             color: black;
         }
 
-        /* Canvas size for graph */
         .graph-container img {
             border: 2px solid #007bff;
             max-width: 500px;
             height: auto;
-        }
-
-        /* Smaller font for labels in sidebar */
-        #sidebar label {
-            font-size: 12px;
-            white-space: nowrap;
         }
     </style>
 </head>
@@ -145,6 +137,25 @@
                     <img src="data:image/png;base64,{{ graph }}" alt="Option Pricing Graph" class="img-fluid mt-3">
                 </div>
             {% endif %}
+
+            <!-- Greek Graphs -->
+            <div class="mt-5">
+                <h5 class="text-secondary">Greeks</h5>
+                <div class="row">
+                    <div class="col-md-6 mt-4">
+                        <h6>Delta</h6>
+                        {% if greek_graphs.delta %}
+                            <img src="data:image/png;base64,{{ greek_graphs.delta }}" alt="Delta Graph" class="img-fluid">
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 mt-4">
+                        <h6>Gamma</h6>
+                        {% if greek_graphs.gamma %}
+                            <img src="data:image/png;base64,{{ greek_graphs.gamma }}" alt="Gamma Graph" class="img-fluid">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -172,6 +183,7 @@
 
 </body>
 </html>
+
 
 
 
